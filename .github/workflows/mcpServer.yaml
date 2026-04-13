@@ -1,0 +1,22 @@
+name: Salesforce Hosted MCP CI
+on: [push]
+
+jobs:
+  create-record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Authenticate to Salesforce
+        run: |
+          npm install -g @salesforce/cli
+          echo "${{ secrets.SFDX_JWT_KEY }}" > server.key
+          sf org login jwt --client-id ${{ secrets.SF_CLIENT_ID }} --jwt-key-file server.key --username ${{ secrets.SF_USERNAME }} --instance-url https://test.salesforce.com --alias ci_org
+          echo "SF_ACCESS_TOKEN=$(sf org display --target-org ci_org --json | jq -r .result.accessToken)" >> $GITHUB_ENV
+
+      - name: Create Record via Hosted MCP
+        run: |
+          npm install @modelcontextprotocol/sdk
+          node ./mcp-server.js
