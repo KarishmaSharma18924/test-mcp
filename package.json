@@ -2,7 +2,7 @@
    "name": "MCP_SERVER",
    "version": "0.0.0",
    "type": "module",
-   "description": "SF Hosted MCP Server.",
+   "description": "SF Hosted MCP Server",
    "author": "salesforce.com",
    "license": "CC0-1.0",
    "dependencies": {
