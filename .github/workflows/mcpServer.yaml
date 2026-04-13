@@ -16,6 +16,15 @@ jobs:
           sf org login jwt --client-id ${{ secrets.SF_CLIENT_ID }} --jwt-key-file server.key --username ${{ secrets.SF_USERNAME }} --instance-url https://test.salesforce.com --alias ci_org
           echo "SF_ACCESS_TOKEN=$(sf org display --target-org ci_org --json | jq -r .result.accessToken)" >> $GITHUB_ENV
 
+      - name: Verify Token
+        run: |
+          if [ -z "$SF_ACCESS_TOKEN" ]; then
+            echo "TOKEN IS EMPTY"
+            exit 1
+          else
+            echo "Token found, length is ${#SF_ACCESS_TOKEN}"
+          fi
+    
       - name: Create Record via Hosted MCP
         run: |
           npm install @modelcontextprotocol/sdk
