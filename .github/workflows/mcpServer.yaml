@@ -27,5 +27,6 @@ jobs:
     
       - name: Create Record via Hosted MCP
         run: |
+          npm config set strict-ssl false
           npm install @modelcontextprotocol/sdk
           node ./mcp-server.js
