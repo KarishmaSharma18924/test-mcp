@@ -15,7 +15,7 @@ async function run() {
         },
     });
 
-    const client = new Client({ name: "CI-Runner", version: "1.0.0" }, { capabilities: {} });
+    const client = new Client({ name: "CI-Runner", version: "1.0.0" }, { capabilities: {}, timeout: 300000 });
     await client.connect(transport);
     const result = await client.callTool({
         name: "soqlQuery",
