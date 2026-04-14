@@ -18,9 +18,13 @@ async function run() {
     const client = new Client({ name: "CI-Runner", version: "1.0.0" }, { capabilities: {}, timeout: 300000 });
     await client.connect(transport);
     const result = await client.callTool({
-        name: "soqlQuery",
+        name: "createSobjectRecord",
         arguments: {
-            q : "SELECT Id, Name FROM Contact LIMIT 10",
+            "sobject-name": "Contact",
+            body: {
+                LastName: "pavan",
+                FirstName: "kumar",
+            },
         },
     });
 
